@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../static/main.css" />
+</head>
+<body>
+    <div class="container" id="header">
+        <div id="inner-header">
+            <h1>Headlines</h1>
+            <p>Headlines. Currency. Weather.</p>
+        </div>
+        <hr>
+    </div>
+
+    <!--Weather-->
+    <div class="container sticky" id="main">
+        <div class="col-md-8 left" >
+            <h2>Current weather</h2>
+            <form>
+                <input type="text" name="city" placeholder="weather search">
+                <input type="submit" value="Submit">
+            </form>
+            <p>City: <b>{{weather.city}}, {{weather.country}}</b></p>
+            <p>{{weather.description}} |{{weather.temperature}}&#8451;</p>
+        </div>
+
+
+        <!--Currency-->
+        <div class="col-md-4 right">
+            <h2>Currency</h2>
+            <form>
+                from:
+                <select name="currency_from">
+                    {% for currency in currencies %}
+                    <option value = "{{currency}}" 
+                    {{'selected="selected"' if currency_from == currency}}>
+                    {{currency}}</option>
+                        {% endfor %}
+                </select>
+                to:
+                <select name="currency_to">
+                    {% for currency in currencies %}
+                    <option value = "{{currency}}" 
+                    {{ 'selected = "selected"' if currency_to == currency}}>
+                    {{currency}}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Submit">
+            </form>
+            1 {{currency_from}} = {{currency_to}} {{rate}}
+        </div>
+    </div>
+    <hr>    
+        <!--News headlines-->
+    <div class="container main" >
+        <h2>Headlines</h2>
+        <form>
+             <select name="publication">
+                {% for media in publications %}
+                <option value="{{media}}"
+                {{ 'selected = "selected"' if publication == media}}>
+                {{media}}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Submit" />
+        </form action = "/" method="POST">
+        {% for article in articles %}
+        <b><a href="{{article.link}}">{{article.title}}</a></b></b><br>
+        <i>{{article.published}}</i><br>
+        <p>{{article.summary}}</p>
+        <hr>
+        {% endfor %}
+    </div>  
+</body>
+</html>
